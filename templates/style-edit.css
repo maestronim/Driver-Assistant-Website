@@ -1,0 +1,26 @@
+@font-face {
+    font-family: navTitolo;
+    src: url(./Bison.ttf);
+}
+
+.navbar-blue{
+  background-color: #034182 !important;
+}
+
+.navbar-title{
+  font-family: navTitolo;
+}
+
+.navbar {
+  border-radius: 0 !important;
+  border: 0 !important;
+  box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.2);
+}
+
+.row-select-data{
+  background-color: #E36E7F !important;
+}
+
+.btn-primary{
+  background-color: #034182 !important;
+}

@@ -1,6 +1,6 @@
 <?php
 	session_start();
-    
+
 	if(!isset($_SESSION['username'])) {
     	header('Location: ./authentication');
     }
@@ -14,6 +14,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+				<link rel="stylesheet" href="./templates/style-edit.css">
+				<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -23,17 +25,17 @@
 
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-        
+
         <!-- momentjs library -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
-        
+
         <!-- datetimepicker library -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-        
-      	<!-- Chart.js library --> 
+
+      	<!-- Chart.js library -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-        
+
         <style>
         #map {
             height: 100%;
@@ -45,10 +47,37 @@
         }
         </style>
     </head>
-    <body>
-    <div class="container">
-        <div class="row">
-            <div class='col-sm-5'>
+    <body style="font-family: 'Montserrat', sans-serif;">
+			<nav class="navbar navbar-default navbar-blue" style="margin: 0;">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					    <span class="icon-bar"></span>
+					    <span class="icon-bar"></span>
+					    <span class="icon-bar"></span>
+					  </button>
+					<a class="navbar-brand " href="#" style="color: white !important; padding: 0; margin-right: 20px;">
+						<img src="./templates/logo-mae.svg" height="40" style="display: inline; vertical-align: baseline;">
+			      <h1 class="navbar-title" style="color: white !important; display: inline; vertical-align: baseline;">DRIVER</h1><h3 class="navbar-title" style="color: white !important; display: inline; vertical-align: baseline;">-Assistant</h3>
+					</a>
+			    </div>
+					<!--ul class="nav navbar-nav">
+			      <li class="navbar-link-active"><a href="#" style="text-decoration: none !important; color: white;">Home</a></li>
+			      <li><a href="#">Page 1</a></li>
+			      <li><a href="#">Page 2</a></li>
+			      <li><a href="#">Page 3</a></li>
+			    </ul-->
+					<div class="collapse navbar-collapse" id="myNavbar">
+						<ul class="nav navbar-nav navbar-right">
+				      <li><a href="#" style="text-decoration: none !important; color: white; "><span class="glyphicon glyphicon-user"></span> Registrati</a></li>
+				      <li><a href="#" style="text-decoration: none !important; color: white;"><span class="glyphicon glyphicon-log-in"></span> Accedi</a></li>
+				    </ul>
+					</div>
+			  </div>
+			</nav>
+    <div class="container-fluid">
+        <div class="row row-select-data" style="padding-top: 20px; padding-bottom: 20px;">
+            <div class='col-sm-5' style="color: white;">
             	Seleziona una data
                 <div class="form-group">
                     <div class='input-group date' id='datetimepicker5'>
@@ -72,7 +101,7 @@
                 var output = d.getFullYear() + '-' +
                     (month<10 ? '0' : '') + month + '-' +
                     (day<10 ? '0' : '') + day;
-                
+
                 $(function () {
                 	var loadPath = function() {
                     	var currentDate = $("#datetimepicker5").find("input").val();
@@ -84,11 +113,11 @@
                             	myObj = jQuery.parseJSON(JSON.stringify(data));
                                	if(myObj.success === "yes") {
                                     $(".dropdown-menu").empty();
-                                    
+
                                     for (var i = 0; i < myObj.paths.length; i++) {
                                     	$(".dropdown-menu").append( '<li id=' + i +'><a href=#>Percorso ' + (i+1) + '<a></li>' );
                                     }
-                                    
+
                                     setInfo(0);
                                     setPolyline(0);
                                 } else {
@@ -133,7 +162,7 @@
                             setInfo(id);
                           	setPolyline(id);
                         }
-                        
+
                         if(carParamObj != null) {
                         	setGraphs();
                         }
@@ -156,11 +185,11 @@
                         }
                         var distanceInKilometers = distanceInMeters / 1000;
                         setDistance(distanceInKilometers.toFixed(2));
-                        
+
 						if(path != null) {
                         	path.setMap(null);
                         }
-                        
+
                         path = new google.maps.Polyline({
                             path: coordinates,
                             geodesic: true,
@@ -168,7 +197,7 @@
                             strokeOpacity: 1.0,
                             strokeWeight: 2
                         });
-						
+
                         path.setMap(map);
                         zoomToObject();
                     };
@@ -179,7 +208,7 @@
                         	labels.push(value + "sec");
                             value += 10;
                         }
-                        
+
                     	var ctxL = document.getElementById(graphId).getContext('2d');
                         var myLineChart = new Chart(ctxL, {
                             type: 'line',
@@ -200,12 +229,12 @@
                             },
                             options: {
                                 responsive: true
-                            }    
+                            }
                         });
                     };
                     var setGraphs = function(id) {
                     	var parametersNames = ["oilTemperature", "RPM", "throttlePosition", "airFuelRatio"];
-                        
+
                         for (var i = 0; i < parametersNames.length; i++) {
                         	var parameters = [];
                         	for (var j = 0; j < carParamObj.pathsParameters[id].length; j++) {
@@ -227,7 +256,7 @@
                     };
                 });
             </script>
-            <div class='col-sm-3'>
+            <div class='col-sm-3' style="color: white;">
             	Seleziona un percorso
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">--
@@ -252,7 +281,7 @@
 			<div class='col-sm-4'>
             	<div class="row">
                 	<div class="col-sm-12">
-                    By 
+                    By
                     <?php
                         echo $_SESSION['username'];
                     ?>
