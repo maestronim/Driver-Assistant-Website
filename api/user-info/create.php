@@ -22,7 +22,7 @@
 
     // set user property values
     $user_info->username = $data->username;
-    $user_info->password = $data->password;
+    $user_info->password = password_hash($data->password, PASSWORD_DEFAULT);
     $user_info->email = $data->email;
 
     // create the user

@@ -45,7 +45,7 @@ class UserInfo{
 	}
     
     function check_credentials() {
-    	$query = "SELECT * FROM users WHERE username=:username AND password=:password";
+    	$query = "SELECT password FROM users WHERE username=:username";
         
           // prepare query
         $stmt = $this->conn->prepare($query);
@@ -56,15 +56,17 @@ class UserInfo{
 
         // bind values
         $stmt->bindParam(":username", $this->username);
-        $stmt->bindParam(":password", $this->password);
         
         // execute query
-        $stmt->execute();
-        
-        // check if more than 0 record found
-        if($stmt->rowCount() > 0) {
-        	return true;
-        }
+        if($stmt->execute()) {
+            // check if more than 0 record found
+            if($stmt->rowCount() > 0) {
+            	$row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if(password_verify($this->password, $row['password'])) {
+                	return true;
+               	}
+            }
+      	}
 
       	return false;
 	}

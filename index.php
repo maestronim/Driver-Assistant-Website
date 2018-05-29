@@ -1,7 +1,11 @@
 <?php
 	session_start();
-    
-	if(!isset($_SESSION['username'])) {
+
+	if(isset($_POST['username'])) {
+    	$username = $_POST['username'];
+    } else if(isset($_SESSION['username'])) {
+    	$username = $_SESSION['username'];
+    } else {
     	header('Location: ./authentication');
     }
 ?>
@@ -23,17 +27,17 @@
 
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-        
+
         <!-- momentjs library -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
-        
+
         <!-- datetimepicker library -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-        
-      	<!-- Chart.js library --> 
+
+      	<!-- Chart.js library -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
-        
+
         <style>
         #map {
             height: 100%;
@@ -72,23 +76,23 @@
                 var output = d.getFullYear() + '-' +
                     (month<10 ? '0' : '') + month + '-' +
                     (day<10 ? '0' : '') + day;
-                
+
                 $(function () {
                 	var loadPath = function() {
                     	var currentDate = $("#datetimepicker5").find("input").val();
                         $.ajax({
                             type: 'POST',
                             url: './api/user-path/read.php',
-                            data: '{"user_id":"<?php echo $_SESSION['username']; ?>","path_date":"' + currentDate + '"}',
+                            data: '{"user_id":"<?php echo $username; ?>","path_date":"' + currentDate + '"}',
                             success: function(data) {
                             	myObj = jQuery.parseJSON(JSON.stringify(data));
                                	if(myObj.success === "yes") {
                                     $(".dropdown-menu").empty();
-                                    
+
                                     for (var i = 0; i < myObj.paths.length; i++) {
                                     	$(".dropdown-menu").append( '<li id=' + i +'><a href=#>Percorso ' + (i+1) + '<a></li>' );
                                     }
-                                    
+
                                     setInfo(0);
                                     setPolyline(0);
                                 } else {
@@ -104,7 +108,7 @@
                     	$.ajax({
                             type: 'POST',
                             url: './api/car-parameters/read.php',
-                            data: '{"user_id":"<?php echo $_SESSION['username']; ?>","path_date":"' + currentDate + '"}',
+                            data: '{"user_id":"<?php echo $username; ?>","path_date":"' + currentDate + '"}',
                             success: function(data) {
                             	carParamObj = jQuery.parseJSON(JSON.stringify(data));
                                 if(carParamObj.success === "yes") {
@@ -133,7 +137,7 @@
                             setInfo(id);
                           	setPolyline(id);
                         }
-                        
+
                         if(carParamObj != null) {
                         	setGraphs();
                         }
@@ -156,11 +160,11 @@
                         }
                         var distanceInKilometers = distanceInMeters / 1000;
                         setDistance(distanceInKilometers.toFixed(2));
-                        
+
 						if(path != null) {
                         	path.setMap(null);
                         }
-                        
+
                         path = new google.maps.Polyline({
                             path: coordinates,
                             geodesic: true,
@@ -168,7 +172,7 @@
                             strokeOpacity: 1.0,
                             strokeWeight: 2
                         });
-						
+
                         path.setMap(map);
                         zoomToObject();
                     };
@@ -179,7 +183,7 @@
                         	labels.push(value + "sec");
                             value += 10;
                         }
-                        
+
                     	var ctxL = document.getElementById(graphId).getContext('2d');
                         var myLineChart = new Chart(ctxL, {
                             type: 'line',
@@ -200,12 +204,12 @@
                             },
                             options: {
                                 responsive: true
-                            }    
+                            }
                         });
                     };
                     var setGraphs = function(id) {
                     	var parametersNames = ["oilTemperature", "RPM", "throttlePosition", "airFuelRatio"];
-                        
+
                         for (var i = 0; i < parametersNames.length; i++) {
                         	var parameters = [];
                         	for (var j = 0; j < carParamObj.pathsParameters[id].length; j++) {
@@ -252,9 +256,9 @@
 			<div class='col-sm-4'>
             	<div class="row">
                 	<div class="col-sm-12">
-                    By 
+                    By
                     <?php
-                        echo $_SESSION['username'];
+                        echo $username;
                     ?>
                     </div>
                 </div>

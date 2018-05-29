@@ -1,4 +1,5 @@
 <?php
+	include_once '../requests/http_requests.php';
 	session_start();
 
 	if(isset($_REQUEST['register-submit'])) {
@@ -7,33 +8,14 @@
             //API Url
             $url = '../api/user-info/create.php';
 
-            //Initiate cURL.
-            $ch = curl_init($url);
-
             //The JSON data.
             $jsonData = array(
                 "username" => $_REQUEST['username'],
                 "email" => $_REQUEST['email'],
                 "password" => $_REQUEST['password']
             );
-
-            //Encode the array into JSON.
-            $jsonDataEncoded = json_encode($jsonData);
-
-            //Tell cURL that we want to send a POST request.
-            curl_setopt($ch, CURLOPT_POST, 1);
-
-            //Attach our encoded JSON string to the POST fields.
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
-
-            //Set the content type to application/json
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-            // Will return the response, if false it print the response
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-            //Execute the request
-            $result = curl_exec($ch);
+            
+            $result = postRequest($url, $jsonData);
             
             $decoded_result = json_decode($result);
 
@@ -51,41 +33,27 @@
     	//API Url
         $url = '../api/user-info/check_credentials.php';
 
-        //Initiate cURL.
-        $ch = curl_init($url);
-
         //The JSON data.
         $jsonData = array(
           "username" => $_REQUEST['username'],
           "password" => $_REQUEST['password']
         );
 
-        //Encode the array into JSON.
-        $jsonDataEncoded = json_encode($jsonData);
-
-        //Tell cURL that we want to send a POST request.
-        curl_setopt($ch, CURLOPT_POST, 1);
-
-        //Attach our encoded JSON string to the POST fields.
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
-
-        //Set the content type to application/json
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-        // Will return the response, if false it print the response
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        //Execute the request
-        $result = curl_exec($ch);
+        $result = postRequest($url, $jsonData);
 
         $decoded_result = json_decode($result);
 
         if($decoded_result->valid == "no") {
           	$error = "Login failed";
         } else {
-			$_SESSION['username'] = $_REQUEST['username'];
-          	header('Location: ../index.php');
-            exit();
+        	if(isset($_REQUEST['remember'])) {
+				$_SESSION['username'] = $_REQUEST['username'];
+                header('Location: ../index.php');
+                exit();
+            } else {
+          		postRedirect('../index.php?username=' . $_REQUEST['username']);
+            	exit();
+          	}
         }
     }
 ?>
