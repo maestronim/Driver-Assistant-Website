@@ -25,7 +25,7 @@
     $user_info->password = $data->password;
 
     // check if the credentials are valid
-    if($user_info->check_credentials()){
+    if($user_info->login()){
       echo '{';
       echo '"valid": "yes",';
       echo '"message": "Valid credentials."';

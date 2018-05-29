@@ -76,7 +76,7 @@
                 var output = d.getFullYear() + '-' +
                     (month<10 ? '0' : '') + month + '-' +
                     (day<10 ? '0' : '') + day;
-
+								// TODO: change the POST methods with GET
                 $(function () {
                 	var loadPath = function() {
                     	var currentDate = $("#datetimepicker5").find("input").val();
