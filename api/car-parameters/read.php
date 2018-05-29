@@ -1,10 +1,10 @@
 <?php
 	// required headers
     header("Access-Control-Allow-Origin: *");
-    header("Content-Type: application/json; charset=UTF-8");
-    header("Access-Control-Allow-Methods: POST");
-    header("Access-Control-Max-Age: 3600");
-    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    header("Access-Control-Allow-Headers: access");
+    header("Access-Control-Allow-Methods: GET");
+    header("Access-Control-Allow-Credentials: true");
+    header('Content-Type: application/json');
     
     include_once '../config/database.php';
     include_once '../objects/user_path.php';
@@ -17,12 +17,10 @@
     // instantiate object
     $user_path = new UserPath($db);
     $car_parameters = new CarParameters($db);
-    
-    // get posted data
-    $data = json_decode(file_get_contents("php://input"));
-
-    $user_path->user_id = $data->user_id;
-    $user_path->path_date = $data->path_date;
+	
+	// set car parameters property values
+    $user_path->user_id = isset($_GET['user_id']) ? $_GET['user_id'] : die();
+    $user_path->path_date = isset($_GET['path_date']) ? $_GET['path_date'] : die();;
 
     $stmt_1 = $user_path->getIDs();
     $num_1 = $stmt_1->rowCount();
