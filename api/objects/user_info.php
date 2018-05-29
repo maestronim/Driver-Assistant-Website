@@ -1,20 +1,20 @@
 <?php
 class UserInfo{
- 
+
     // database connection and table name
     private $conn;
     private $table_name = "users";
- 
+
     // object properties
     public $username;
     public $password;
     public $email;
- 
+
     // constructor with $db as database connection
     public function __construct($db){
         $this->conn = $db;
     }
-    
+
     // create user
 	function create(){
         // query to insert record
@@ -43,10 +43,10 @@ class UserInfo{
 
         return false;
 	}
-    
-    function check_credentials() {
+
+    function login() {
     	$query = "SELECT password FROM users WHERE username=:username";
-        
+
           // prepare query
         $stmt = $this->conn->prepare($query);
 
@@ -56,7 +56,7 @@ class UserInfo{
 
         // bind values
         $stmt->bindParam(":username", $this->username);
-        
+
         // execute query
         if($stmt->execute()) {
             // check if more than 0 record found

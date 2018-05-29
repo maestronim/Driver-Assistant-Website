@@ -4,7 +4,7 @@
 
 	if(isset($_REQUEST['register-submit'])) {
     	if($_REQUEST['confirm-password'] == $_REQUEST['password']) {
-    	
+
             //API Url
             $url = '../api/user-info/create.php';
 
@@ -14,9 +14,9 @@
                 "email" => $_REQUEST['email'],
                 "password" => $_REQUEST['password']
             );
-            
+
             $result = postRequest($url, $jsonData);
-            
+
             $decoded_result = json_decode($result);
 
             if($decoded_result->success == "no") {
@@ -31,7 +31,7 @@
         }
     } else if(isset($_REQUEST['login-submit'])) {
     	//API Url
-        $url = '../api/user-info/check_credentials.php';
+        $url = '../api/user-info/login.php';
 
         //The JSON data.
         $jsonData = array(
@@ -69,7 +69,7 @@
 
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        
+
         <script src="script.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css">
 	</head>

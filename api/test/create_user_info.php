@@ -1,6 +1,6 @@
 <?php
 	//API Url
-    $url = 'http://maestronim.altervista.org/Automotive/Api/user-info/create.php';
+    $url = 'http://maestronim.altervista.org/Driver-Assistant/api/user-info/create.php';
 
     //Initiate cURL.
     $ch = curl_init($url);

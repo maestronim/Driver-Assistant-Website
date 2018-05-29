@@ -1,6 +1,6 @@
 <?php
 	//API Url
-    $url = 'http://maestronim.altervista.org/Driver-Assistant/api/user-info/check_credentials.php';
+    $url = 'http://maestronim.altervista.org/Driver-Assistant/api/user-info/login.php';
 
     //Initiate cURL.
     $ch = curl_init($url);
