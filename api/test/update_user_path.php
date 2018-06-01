@@ -6,17 +6,18 @@
     $ch = curl_init($url);
     
     $coords = array(
-    	array(23.4326364,37.5237996)
+    	array(23.4326364, 37.5237996),
+        array(23.2424242, 38.2348704)
         );
 
     //The JSON data.
     $jsonData = array(
         "user_id" => "maestronim",
-        "path_date" => "2018-05-18 22:24:57",
-        "hard_braking" => "8",
-        "speed_limit_exceeded" => "16",
+        "path_date" => "2018-06-01 12:28:40",
+        "hard_braking" => "4",
+        "speed_limit_exceeded" => "11",
         "dangerous_time" => "1",
-        "duration" => "00:40:45",
+        "duration" => "00:10:45",
         "coordinates" => $coords
     );
 

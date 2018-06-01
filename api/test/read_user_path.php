@@ -1,31 +1,16 @@
 <?php
 	//API Url
-    $url = 'http://maestronim.altervista.org/Driver-Assistant/api/user-path/read.php';
+    $url = 'http://maestronim.altervista.org/Driver-Assistant/api/user-path/read.php?user_id=maestronim&path_date=2018-05-15&offset=0';
 
-    //Initiate cURL.
-    $ch = curl_init($url);
-
-    //The JSON data.
-    $jsonData = array(
-      "user_id" => "maestronim",
-      "path_date" => "2018-05-15"
-    );
-
-    //Encode the array into JSON.
-    $jsonDataEncoded = json_encode($jsonData);
-
-    //Tell cURL that we want to send a POST request.
-    curl_setopt($ch, CURLOPT_POST, 1);
-
-    //Attach our encoded JSON string to the POST fields.
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
-
-    //Set the content type to application/json
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-    /*// Will return the response, if false it print the response
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);*/
-
-    //Execute the request
-    $result = curl_exec($ch);
+    // Get cURL resource
+    $curl = curl_init();
+    // Set some options - we are passing in a useragent too here
+    curl_setopt_array($curl, array(
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_URL => $url
+    ));
+    // Send the request & save response to $resp
+    $resp = curl_exec($curl);
+    // Close request to clear up some resources
+    curl_close($curl);
 ?>

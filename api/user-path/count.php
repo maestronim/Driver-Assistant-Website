@@ -22,29 +22,16 @@
     // set path property values
     $user_path->user_id = isset($_GET['user_id']) ? $_GET['user_id'] : die();
     $user_path->path_date = isset($_GET['path_date']) ? $_GET['path_date'] : die();
-    $user_path->offset = isset($_GET['offset']) ? $_GET['offset'] : die();
 
-    $stmt = $user_path->read();
+    $stmt = $user_path->count();
 
     $num = $stmt->rowCount();
 
     if($num>0){
 		    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $json_data = file_get_contents($row['url']);
-        $data = json_decode($json_data);
-
-        $path = array(
-            "id" => $row['id'],
-            "hard_braking" => $row['hard_braking'],
-            "speed_limit_exceeded" => $row['speed_limit_exceeded'],
-            "dangerous_time" => $row['dangerous_time'],
-            "duration" => $row['duration'],
-            "coordinates" => $data->coordinates
-      	);
 
         $response = array(
-            "success" => "yes",
-            "path" => $path
+            "count" => $row['paths_count']
         );
 
         $response_json = json_encode($response);
@@ -52,8 +39,7 @@
       	echo $response_json;
     } else {
         echo '{';
-        echo '"success": "no",';
-        echo '"message": "No paths found"';
+        echo '"count": "0"';
         echo '}';
     }
 ?>
