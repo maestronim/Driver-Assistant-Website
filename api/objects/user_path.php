@@ -78,10 +78,10 @@ class UserPath{
     $stmt->bindParam(":duration", $this->duration);
 
     // execute query
-    if($stmt->execute()){
-      if($stmt->rowCount() > 0) {
-        return true;
-      }
+    $stmt->execute();
+
+    if($stmt->rowCount() > 0) {
+      return true;
     }
 
     return false;

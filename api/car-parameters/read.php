@@ -8,44 +8,59 @@ header('Content-Type: application/json');
 
 include_once '../config/database.php';
 include_once '../objects/car_parameters.php';
+require_once '../validate_token.php';
 
-// get database connection
-$database = new Database();
-$db = $database->getConnection();
+/*
+* Get all headers from the HTTP request
+*/
+$headers = apache_request_headers();
+$authHeader = $headers['Authorization'];
 
-// instantiate object
-$car_parameters = new CarParameters($db);
+if(validate_token($authHeader)) {
 
-// set car parameters property values
-$car_parameters->path_id = isset($_GET['path_id']) ? $_GET['path_id'] : die();
+  // get database connection
+  $database = new Database();
+  $db = $database->getConnection();
 
-$stmt = $car_parameters->read();
-$num = $stmt->rowCount();
-if($num > 0) {
-  $parameters_list= [];
-  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-    $parameters = array(
-      $row['oilTemperature'],
-      $row['RPM'],
-      $row['throttlePosition'],
-      $row['airFuelRatio']
+  // instantiate object
+  $car_parameters = new CarParameters($db);
+
+  // set car parameters property values
+  $car_parameters->path_id = isset($_GET['path_id']) ? $_GET['path_id'] : die();
+
+  $stmt = $car_parameters->read();
+  $num = $stmt->rowCount();
+  if($num > 0) {
+    $parameters_list= [];
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+      $parameters = array(
+        $row['oilTemperature'],
+        $row['RPM'],
+        $row['throttlePosition'],
+        $row['airFuelRatio']
+      );
+
+      array_push($parameters_list, $parameters);
+    }
+
+    $response = array(
+      "success" => "yes",
+      "parameters" => $parameters_list
     );
 
-    array_push($parameters_list, $parameters);
-  }
+    $response_json = json_encode($response);
 
-  $response = array(
-    "success" => "yes",
-    "parameters" => $parameters_list
-  );
-
-  $response_json = json_encode($response);
-
-  echo $response_json;
-} else {
-  echo '{';
-    echo '"success": "no",';
-    echo '"message": "No parameters found"';
-    echo '}';
-  }
-  ?>
+    echo $response_json;
+  } else {
+    echo '{';
+      echo '"success": "no",';
+      echo '"message": "No parameters found"';
+      echo '}';
+    }
+  } else {
+    echo '{';
+      echo '"success": "no",';
+      echo '"message": "Access denied"';
+      echo '}';
+    }
+    ?>
