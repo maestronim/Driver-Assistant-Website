@@ -10,6 +10,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once '../config/database.php';
 include_once '../objects/user_info.php';
 require_once '../../vendor/autoload.php';
+require_once '../token/config.php';
 
 use \Firebase\JWT\JWT;
 
@@ -65,7 +66,6 @@ if($stmt->rowCount() > 0) {
     * token later.
     */
 
-    $key = "ZXhhbXBsZV9rZXk=";
     $secretKey = base64_decode($key);
 
     /*

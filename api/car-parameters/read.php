@@ -8,7 +8,7 @@ header('Content-Type: application/json');
 
 include_once '../config/database.php';
 include_once '../objects/car_parameters.php';
-require_once '../validate_token.php';
+require_once '../token/validate.php';
 
 /*
 * Get all headers from the HTTP request

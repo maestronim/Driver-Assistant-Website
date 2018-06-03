@@ -8,7 +8,7 @@ header('Content-Type: application/json');
 
 require_once '../config/database.php';
 require_once '../objects/user_path.php';
-require_once '../validate_token.php';
+require_once '../token/validate.php';
 
 /*
 * Get all headers from the HTTP request
