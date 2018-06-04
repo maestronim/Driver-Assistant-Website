@@ -8,11 +8,25 @@
     //The JSON data.
     $jsonData = array(
       "user_id" => "maestronim",
-      "path_date" => "2018-05-15 17:43:29",
-      "oilTemperature" => "130",
-      "RPM" => "2200",
-      "throttlePosition" => "30",
-      "airFuelRatio" => "14.2"
+      "path_date" => "2018-06-01 12:26:13",
+      "absoluteEngineLoad" => "34.4",
+      "engineLoad" => "45",
+      "massAirFlow" => "54",
+      "oilTemperature" => "81.3",
+      "RPM" => "1500",
+      "throttlePosition" => "27.6",
+      "airFuelRatio" => "12",
+      "consumptionRate" => "23",
+      "fuelLevel" => "31.8",
+      "fuelTrim" => "34",
+      "widebandAirFuelRatio" => "56",
+      "barometricPressure" => "135.6",
+      "fuelPressure" => "90",
+      "fuelRailPressure" => "105.6",
+      "intakeManifoldPressure" => "45",
+      "airIntakeTemperature" => "78",
+      "ambientAirTemperature" => "27.2",
+      "engineCoolantTemperature" => "66"
     );
 
     //Encode the array into JSON.
