@@ -1,6 +1,6 @@
 <?php
 	//API Url
-    $url = 'http://maestronim.altervista.org/Driver-Assistant/api/car-parameters/read.php';
+    $url = 'http://maestronim.altervista.org/Driver-Assistant/api/car-parameters/read.php?path_id=4';
 
     //Initiate cURL.
     $ch = curl_init($url);

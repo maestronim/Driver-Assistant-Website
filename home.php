@@ -219,14 +219,9 @@ if(!isset($_SESSION['username'])){
 					});
 				};
 				var setGraphs = function(carParameters) {
-					var parametersNames = ["oilTemperature", "RPM", "throttlePosition", "airFuelRatio"];
-
-					for (var i = 0; i < parametersNames.length; i++) {
-						var parameters = [];
-						for (var j = 0; j < carParameters.parameters.length; j++) {
-							parameters.push(carParameters.parameters[j][i]);
-						}
-						setGraph(parametersNames[i], parameters);
+					for (var i = 0; i < carParameters.parameters.length; i++) {
+						setGraph(carParameters.parameters[i].name, carParameters.parameters[i].values);
+						alert(carParameters.parameters[i].name);
 					}
 				};
 				var setDistance = function(distance) {
@@ -308,6 +303,7 @@ if(!isset($_SESSION['username'])){
 					</div>
 				</div>
 			</div>
+			<!--TODO:create the graphs programmatically-->
 			<div class="row">
 				<div class="col-sm-6">
 					<canvas id="oilTemperature"></canvas>

@@ -1,9 +1,10 @@
 <?php
-require_once '../../vendor/autoload.php';
 use \Firebase\JWT\JWT;
 
 function validate_token($authHeader) {
+  require_once '../../vendor/autoload.php';
   require_once 'config.php';
+
   /*
   * Look for the 'authorization' header
   */

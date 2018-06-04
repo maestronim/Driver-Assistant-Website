@@ -31,16 +31,22 @@ if(validate_token($authHeader)) {
   $stmt = $car_parameters->read();
   $num = $stmt->rowCount();
   if($num > 0) {
-    $parameters_list= [];
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-      $parameters = array(
-        $row['oilTemperature'],
-        $row['RPM'],
-        $row['throttlePosition'],
-        $row['airFuelRatio']
-      );
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      foreach($car_parameters->get_parameters_list() as $parameter) {
+        if($row[$parameter] != -1) {
+          if(!isset($parameters[$parameter])) {
+            $parameters[$parameter] = [];
+          }
+          array_push($parameters[$parameter], $row[$parameter]);
+        }
+      }
+    }
 
-      array_push($parameters_list, $parameters);
+    $parameters_list = [];
+    foreach ($parameters as $k => $value) {
+      $parameters_object['name'] = $k;
+      $parameters_object['values'] = $value;
+      array_push($parameters_list, $parameters_object);
     }
 
     $response = array(
@@ -48,9 +54,7 @@ if(validate_token($authHeader)) {
       "parameters" => $parameters_list
     );
 
-    $response_json = json_encode($response);
-
-    echo $response_json;
+    echo json_encode($response);
   } else {
     echo '{';
       echo '"success": "no",';
