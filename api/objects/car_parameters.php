@@ -24,6 +24,7 @@ class CarParameters{
   public $airIntakeTemperature;
   public $ambientAirTemperature;
   public $engineCoolantTemperature;
+  public $path_id;
 
   // constructor with $db as database connection
   public function __construct($db){
@@ -124,7 +125,7 @@ class CarParameters{
     if($stmt->execute()){
       return true;
     }
-    
+
     return false;
   }
 

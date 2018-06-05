@@ -1,7 +1,7 @@
 <?php
 use \Firebase\JWT\JWT;
 
-function validate_token($authHeader) {
+function validate_token($authHeader, $user_id) {
   require_once '../../vendor/autoload.php';
   require_once 'config.php';
 
@@ -23,7 +23,11 @@ function validate_token($authHeader) {
 
         $token = JWT::decode($jwt, $secretKey, array('HS512'));
 
-        return true;
+        if($token->data->username == $user_id) {
+          return true;
+        }
+
+        return false;
 
       } catch (Exception $e) {
         /*

@@ -37,7 +37,7 @@ if($stmt->rowCount() > 0) {
   if(password_verify($data->password, $row['password'])) {
     $tokenId    = base64_encode(mcrypt_create_iv(32));
     $issuedAt   = time();
-    $expire     = $issuedAt + 3600;            // Adding 60 seconds
+    $expire     = $issuedAt + 86400;            // Adding 60 seconds
     $serverName = $_SERVER['SERVER_NAME']; // Retrieve the server name from config file
 
     /*
@@ -49,8 +49,7 @@ if($stmt->rowCount() > 0) {
       'iss'  => $serverName,       // Issuer
       'exp'  => $expire,           // Expire
       'data' => [                  // Data related to the signer user
-        'username' => $row['username'],
-        'email' => $row['email']
+        'username' => $row['username']
       ]
     ];
 

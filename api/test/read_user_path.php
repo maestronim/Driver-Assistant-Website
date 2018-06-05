@@ -6,7 +6,7 @@
     $curl = curl_init();
     // Set some options - we are passing in a useragent too here
     curl_setopt_array($curl, array(
-        CURLOPT_HTTPHEADER  => array('Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MjgwNDg1NjEsImp0aSI6InAxXC95XC94clU1Z2ZMeHYxbE8yRmV4aXdMeFg4YnlEaktkcFRrbWljY040ND0iLCJpc3MiOiJtYWVzdHJvbmltLmFsdGVydmlzdGEub3JnIiwiZXhwIjoxNTI4MDUyMTYxLCJkYXRhIjp7InVzZXJuYW1lIjoibWFlc3Ryb25pbSIsImVtYWlsIjoibWljaGVsZW1hZXN0cm9uaTlAZ21haWwuY29tIn19.DAas4SpU7tIqV7hzuVsr7NLEayaOWhpMUaqiuxUb3iwP15van42ls4xLcM0G4aE0yXsZhzQ1txUFhiy8Qhgw3w'),
+        CURLOPT_HTTPHEADER  => array('Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MjgxOTE2MzAsImp0aSI6IktaNjZWdmpuK25WQzQyUHNzV3RjUTFVc1wvSmVjQzFOTTI0QmYrV3JMQUVnPSIsImlzcyI6Im1hZXN0cm9uaW0uYWx0ZXJ2aXN0YS5vcmciLCJleHAiOjE1MjgxOTUyMzAsImRhdGEiOnsidXNlcm5hbWUiOiJtYWVzdHJvbmltIiwiZW1haWwiOiJtaWNoZWxlbWFlc3Ryb25pOUBnbWFpbC5jb20ifX0.zDAMGrkRQ0yUVIASJX7oq250YZGpnRJIt-3DxUVvQ59nKtDZJQbQUtMhsMnHPlN6Gk34LvHJYAo_-rZ2OlQmRw'),
         CURLOPT_URL => $url
     ));
     // Send the request & save response to $resp

@@ -8,7 +8,7 @@
     //The JSON data.
     $jsonData = array(
       "user_id" => "maestronim",
-      "path_date" => "2018-06-01 12:26:13",
+      "path_id" => "2",
       "absoluteEngineLoad" => "34.4",
       "engineLoad" => "45",
       "massAirFlow" => "54",
@@ -38,8 +38,14 @@
     //Attach our encoded JSON string to the POST fields.
     curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
 
+    $header = array(
+      'Accept: application/json',
+      'Content-Type: application/json',
+      'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MjgyMDMxNzAsImp0aSI6IlVpTDI0Zko0VFpzQTB2cFhqb3ZvMmpkZUZhZGhHTEJHZWd3NTV1YzRWZFU9IiwiaXNzIjoibWFlc3Ryb25pbS5hbHRlcnZpc3RhLm9yZyIsImV4cCI6MTUyODI4OTU3MCwiZGF0YSI6eyJ1c2VybmFtZSI6Im1hZXN0cm9uaW0ifX0.5vq_RNV_yqY-le7X_4j6XEd1oKS6N7T9IOz6nsFTMXkopoms2nu2YL5eUOUFU_bIxTkMyTeS-PSWq2MtX-sBtw'
+    );
+
     //Set the content type to application/json
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 
     /*// Will return the response, if false it print the response
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);*/

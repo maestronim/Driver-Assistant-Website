@@ -6,25 +6,6 @@ session_start();
 if( isset($_SESSION['username']) ){
 	header('Location: home.php');
 	exit();
-} else if( isset($_COOKIE['rememberme'] )){
-
-	$username = $_COOKIE['rememberme'];
-
-	$url = 'http://maestronim.altervista.org/Driver-Assistant/api/user-info/check.php';
-
-	//The JSON data.
-	$jsonData = array(
-		"username" => $username
-	);
-
-	$result = postRequest($url, $jsonData);
-	$decoded_result = json_decode($result);
-
-	if( $decoded_result->success == "yes" ){
-		$_SESSION['username'] = $username;
-		header('Location: home.php');
-		exit();
-	}
 }
 
 if(isset($_REQUEST['register-submit'])) {
@@ -71,14 +52,9 @@ if(isset($_REQUEST['register-submit'])) {
 	if($decoded_result->valid == "no") {
 		$error = "Login failed";
 	} else {
-		if(isset($_REQUEST['remember'])) {
-			// Set cookie variables
-			$days = 30;
-			$value = $_REQUEST['username'];
-			setcookie ("rememberme", $value, time()+ ($days * 24 * 60 * 60 * 1000));
-		}
-
+		// Set cookie variables
 		setcookie("jwt", $decoded_result->jwt, 0, "/");
+
 		$_SESSION['username'] = $_REQUEST['username'];
 		header('Location: home.php');
 		exit();
@@ -127,10 +103,10 @@ if(isset($_REQUEST['register-submit'])) {
 									<div class="form-group">
 										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
 									</div>
-									<div class="form-group text-center">
+									<!--<div class="form-group text-center">
 										<input type="checkbox" tabindex="3" class="" name="remember" id="remember">
 										<label for="remember"> Remember Me</label>
-									</div>
+									</div>-->
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">

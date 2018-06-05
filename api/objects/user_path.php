@@ -6,6 +6,7 @@ class UserPath{
   private $table_name = "paths";
 
   // object properties
+  public $path_id;
   public $path_date;
   public $user_id;
   public $hard_braking;
@@ -56,22 +57,20 @@ class UserPath{
     speed_limit_exceeded = :speed_limit_exceeded,
     dangerous_time = :dangerous_time,
     duration = :duration
-    WHERE user_id = :user_id AND path_date = :path_date";
+    WHERE id = :path_id";
 
     // prepare query
     $stmt = $this->conn->prepare($query);
 
     // sanitize
-    $this->user_id=htmlspecialchars(strip_tags($this->user_id));
-    $this->path_date=htmlspecialchars(strip_tags($this->path_date));
+    $this->path_id=htmlspecialchars(strip_tags($this->path_id));
     $this->speed_limit_exceeded=htmlspecialchars(strip_tags($this->speed_limit_exceeded));
     $this->hard_braking=htmlspecialchars(strip_tags($this->hard_braking));
     $this->dangerous_time=htmlspecialchars(strip_tags($this->dangerous_time));
     $this->duration=htmlspecialchars(strip_tags($this->duration));
 
     // bind values
-    $stmt->bindParam(":user_id", $this->user_id);
-    $stmt->bindParam(":path_date", $this->path_date);
+    $stmt->bindParam(":path_id", $this->path_id);
     $stmt->bindParam(":hard_braking", $this->hard_braking);
     $stmt->bindParam(":speed_limit_exceeded", $this->speed_limit_exceeded);
     $stmt->bindParam(":dangerous_time", $this->dangerous_time);
@@ -91,18 +90,16 @@ class UserPath{
     // query to read single record
     $query = "SELECT url
     FROM   " . $this->table_name . "
-    WHERE user_id = ? AND path_date = ?";
+    WHERE id = ?";
 
     // prepare query statement
     $stmt = $this->conn->prepare( $query );
 
     // sanitize
-    $this->user_id=htmlspecialchars(strip_tags($this->user_id));
-    $this->path_date=htmlspecialchars(strip_tags($this->path_date));
+    $this->path_id=htmlspecialchars(strip_tags($this->path_id));
 
     // bind values
-    $stmt->bindParam(1, $this->user_id);
-    $stmt->bindParam(2, $this->path_date);
+    $stmt->bindParam(1, $this->path_id);
 
     // execute query
     $stmt->execute();
