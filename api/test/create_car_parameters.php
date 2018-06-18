@@ -41,7 +41,7 @@
     $header = array(
       'Accept: application/json',
       'Content-Type: application/json',
-      'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MjgyMDMxNzAsImp0aSI6IlVpTDI0Zko0VFpzQTB2cFhqb3ZvMmpkZUZhZGhHTEJHZWd3NTV1YzRWZFU9IiwiaXNzIjoibWFlc3Ryb25pbS5hbHRlcnZpc3RhLm9yZyIsImV4cCI6MTUyODI4OTU3MCwiZGF0YSI6eyJ1c2VybmFtZSI6Im1hZXN0cm9uaW0ifX0.5vq_RNV_yqY-le7X_4j6XEd1oKS6N7T9IOz6nsFTMXkopoms2nu2YL5eUOUFU_bIxTkMyTeS-PSWq2MtX-sBtw'
+      'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MjkzMTU0OTUsImp0aSI6IklJZU9WT1dKc0lYNXl5azdJcm9BR20zeGY4SUpIcHNtc0pMcXNhb0I1eW89IiwiaXNzIjoibWFlc3Ryb25pbS5hbHRlcnZpc3RhLm9yZyIsImV4cCI6MTUyOTQwMTg5NSwiZGF0YSI6eyJ1c2VybmFtZSI6Im1hZXN0cm9uaW0ifX0._vSIQo3v21sKuE7V0GLO7_X_TJSkA64mzQpY_PLmNv3MWlR1PaIR6t8ZuQ2gXI3pf7nxn0xQaIRAk-DxGB3Y9w'
     );
 
     //Set the content type to application/json

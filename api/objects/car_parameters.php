@@ -25,6 +25,7 @@ class CarParameters{
   public $ambientAirTemperature;
   public $engineCoolantTemperature;
   public $path_id;
+  public $offset;
 
   // constructor with $db as database connection
   public function __construct($db){
@@ -143,6 +144,25 @@ class CarParameters{
     // bind values
     $stmt->bindParam(":path_id", $this->path_id);
 
+    $stmt->execute();
+
+    return $stmt;
+  }
+
+  function count() {
+    $query = "SELECT count(*) as car_parameters_count FROM " . $this->table_name . "
+    WHERE path_id = ?";
+
+    // prepare query statement
+    $stmt = $this->conn->prepare( $query );
+
+    // sanitize
+    $this->path_id=htmlspecialchars(strip_tags($this->path_id));
+
+    // bind values
+    $stmt->bindParam(1, $this->path_id);
+
+    // execute query
     $stmt->execute();
 
     return $stmt;

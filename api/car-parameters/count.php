@@ -7,7 +7,7 @@ header("Access-Control-Allow-Credentials: true");
 header('Content-Type: application/json');
 
 include_once '../config/database.php';
-include_once '../objects/user_path.php';
+include_once '../objects/car_parameters.php';
 require_once '../token/validate.php';
 
 /*
@@ -22,34 +22,41 @@ if (validate_token($authHeader, isset($_GET['user_id']) ? $_GET['user_id'] : die
     $db       = $database->getConnection();
 
     // instantiate object
-    $user_path = new UserPath($db);
+    $car_parameters = new CarParameters($db);
 
-    // get posted data
-    $data = json_decode(file_get_contents("php://input"));
+    // set car parameters property values
+    $car_parameters->path_id = isset($_GET['path_id']) ? $_GET['path_id'] : die();
 
-    // set path property values
-    $user_path->user_id   = isset($_GET['user_id']) ? $_GET['user_id'] : die();
-    $user_path->path_date = isset($_GET['path_date']) ? $_GET['path_date'] : die();
-
-    $stmt = $user_path->count();
-
-    $num = $stmt->rowCount();
-
+    $stmt = $car_parameters->read();
+    $num  = $stmt->rowCount();
+    $parameters_count = 0;
     if ($num > 0) {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        foreach ($car_parameters->get_parameters_list() as $parameter) {
+            if ($row[$parameter] != -1) {
+                $parameters_count++;
+            }
+        }
 
-        $response = array(
-            "success" => "yes",
-            "count" => $row['paths_count']
-        );
+        if($parameters_count > 0) {
+          $response = array(
+              "success" => "yes",
+              "count" => $parameters_count
+          );
 
-        $response_json = json_encode($response);
+          $response_json = json_encode($response);
 
-        echo $response_json;
+          echo $response_json;
+        } else {
+            echo '{';
+            echo '"success": "no",';
+            echo '"message": "No parameters found"';
+            echo '}';
+        }
     } else {
         echo '{';
         echo '"success": "no",';
-        echo '"message": "No paths found"';
+        echo '"message": "No parameters found"';
         echo '}';
     }
 } else {

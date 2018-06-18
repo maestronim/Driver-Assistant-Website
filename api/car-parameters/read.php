@@ -26,19 +26,25 @@ if (validate_token($authHeader, isset($_GET['user_id']) ? $_GET['user_id'] : die
 
     // set car parameters property values
     $car_parameters->path_id = isset($_GET['path_id']) ? $_GET['path_id'] : die();
+    $offset = isset($_GET['offset']) ? $_GET['offset'] : die();
 
     $stmt = $car_parameters->read();
     $num  = $stmt->rowCount();
+    $count = 0;
+    $parameters_names = $car_parameters->get_parameters_list();
     if ($num > 0) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            foreach ($car_parameters->get_parameters_list() as $parameter) {
-                if ($row[$parameter] != -1) {
-                    if (!isset($parameters[$parameter])) {
-                        $parameters[$parameter] = [];
-                    }
-                    array_push($parameters[$parameter], $row[$parameter]);
-                }
+            for ($i=$offset;$count<2;$i++) {
+              $parameter = $parameters_names[$i];
+              if ($row[$parameter] != -1) {
+                  if (!isset($parameters[$parameter])) {
+                      $parameters[$parameter] = [];
+                  }
+                  array_push($parameters[$parameter], $row[$parameter]);
+                  $count++;
+              }
             }
+            $count=0;
         }
 
         $parameters_list = [];
