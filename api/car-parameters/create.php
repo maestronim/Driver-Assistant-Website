@@ -29,6 +29,7 @@ if (validate_token($authHeader, $data->user_id)) {
     $car_parameters = new CarParameters($db);
 
     // set user property values
+    $car_parameters->speed                    = $data->speed;
     $car_parameters->absoluteEngineLoad       = $data->absoluteEngineLoad;
     $car_parameters->engineLoad               = $data->engineLoad;
     $car_parameters->massAirFlow              = $data->massAirFlow;

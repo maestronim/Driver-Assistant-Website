@@ -202,11 +202,13 @@
                		getPathsCount();
                		loadPath(0);
                	});
-               	$(".dropdown-menu").on('click', 'li', function () {
+               	$(".dropdown-menu").on('click', 'li', function (e) {
+                  e.preventDefault();
                		var offset = this.id;
                		loadPath(offset);
                	});
-               	$(".pagination").on('click', 'li', function () {
+               	$(".pagination").on('click', 'li', function (e) {
+                  e.preventDefault();
                		var offset = $(this).text();
                		loadCarParameters(path_id, (offset*2)-2);
                	});
@@ -276,8 +278,12 @@
                		});
                	};
                	var setGraphs = function(carParameters) {
+                  if(carParameters.parameters.length < 2) {
+                    $("#graph2 canvas").remove();
+                    $("#graph2").html("<canvas id='id2'></canvas>");
+                  }
                		for (var i = 0; i < carParameters.parameters.length; i++) {
-               			$("#graph" + (i+1)).html("<canvas id='" + carParameters.parameters[i].name + "'></canvas>");
+               			$("#graph" + (i+1) + " > canvas").attr("id", carParameters.parameters[i].name);
                			setGraph(carParameters.parameters[i].name, carParameters.parameters[i].values);
                		}
                	};
@@ -378,8 +384,10 @@
          </div>
          <div class="row">
             <div class="col-sm-6" id="graph1">
+              <canvas id="id1"></canvas>
             </div>
             <div class="col-sm-6" id="graph2">
+              <canvas id="id2"></canvas>
             </div>
          </div>
          <div class="row">

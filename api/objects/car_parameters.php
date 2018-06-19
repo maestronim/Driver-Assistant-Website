@@ -6,6 +6,7 @@ class CarParameters{
   private $table_name = "car_parameters";
 
   // object properties
+  public $speed;
   public $absoluteEngineLoad;
   public $engineLoad;
   public $massAirFlow;
@@ -33,7 +34,8 @@ class CarParameters{
   }
 
   function get_parameters_list() {
-    return array("absoluteEngineLoad",
+    return array("speed",
+    "absoluteEngineLoad",
     "engineLoad",
     "massAirFlow",
     "oilTemperature",
@@ -58,6 +60,7 @@ class CarParameters{
     // query to insert record
     $query = "INSERT INTO " . $this->table_name . "
     SET absoluteEngineLoad = :absoluteEngineLoad,
+    speed = :speed,
     engineLoad = :engineLoad,
     massAirFlow = :massAirFlow,
     oilTemperature = :oilTemperature,
@@ -81,6 +84,7 @@ class CarParameters{
     $stmt = $this->conn->prepare($query);
 
     // sanitize
+    $this->speed=htmlspecialchars(strip_tags($this->speed));
     $this->absoluteEngineLoad=htmlspecialchars(strip_tags($this->absoluteEngineLoad));
     $this->engineLoad=htmlspecialchars(strip_tags($this->engineLoad));
     $this->massAirFlow=htmlspecialchars(strip_tags($this->massAirFlow));
@@ -102,6 +106,7 @@ class CarParameters{
     $this->path_id=htmlspecialchars(strip_tags($this->path_id));
 
     // bind values
+    $stmt->bindParam(":speed", $this->speed);
     $stmt->bindParam(":absoluteEngineLoad", $this->absoluteEngineLoad);
     $stmt->bindParam(":engineLoad", $this->engineLoad);
     $stmt->bindParam(":massAirFlow", $this->massAirFlow);

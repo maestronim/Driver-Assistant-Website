@@ -34,7 +34,7 @@ if (validate_token($authHeader, isset($_GET['user_id']) ? $_GET['user_id'] : die
     $parameters_names = $car_parameters->get_parameters_list();
     if ($num > 0) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            for ($i=$offset;$count<2;$i++) {
+            for ($i=$offset;$count<2&&$i<count($parameters_names);$i++) {
               $parameter = $parameters_names[$i];
               if ($row[$parameter] != -1) {
                   if (!isset($parameters[$parameter])) {
